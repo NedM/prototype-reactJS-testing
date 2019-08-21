@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Link from '../components/Link'
+import Link, { linkWithIcon } from '../components/Link'
 
 describe('<Link />', () => {
   it('renders correctly', () => {
@@ -8,3 +8,10 @@ describe('<Link />', () => {
     debugger;
   });
 });
+
+describe('<linkWithIcon />', () => {
+  it('renders correctly when shallow rendered', () => {
+    const wrapper = shallow(<linkWithIcon icon={'myIcon'}>'Hello there!'</linkWithIcon>);
+    debugger;
+  });
+})
