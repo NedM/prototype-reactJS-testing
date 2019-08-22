@@ -1,7 +1,3 @@
-test('twice two', () => {
-  expect(2*2).toBe(4);
-});
-
 test('two, two times', () => {
   const value = 2*2;
 
@@ -48,6 +44,14 @@ test('there is a me in meat', () => {
   expect('meat').toContain('me');
 });
 
+test('string equality', () => {
+  const myString = 'This is my string. There are many like it but this one is mine.';
+  const myOtherString = 'This is my string. There are many like it but this one is mine.';
+  // toBe and toEqual use Object.is to compare which is equivalent for primitive values
+  expect(myString).toEqual(myOtherString);
+  expect(myString).toBe(myOtherString);
+});
+
 // Arrays & Sets
 const shoppingList = [
   'diapers',
@@ -63,6 +67,37 @@ const shoppingList = [
 test("don't forget the beer!", () => {
   expect(shoppingList).toContain('beer');
   expect(new Set(shoppingList)).toContain('beer');
+});
+
+test('arrays containing arrays', () => {
+  expect([
+    ['diapers', 'wipes'],
+    ['beer', 'scotch', 'wine'],
+    ['paper towels', 'cleaning products'],
+  ]).toContainEqual(['beer', 'scotch', 'wine']);
+});
+
+test('array of objects', () => {
+  expect([{a: 1, b: 2}, {c: [3, 4, 5]}]).toContainEqual({c: [3, 4, 5]});
+});
+
+// Objects
+test('object equality', () => {
+  const objA = {
+    name: 'My Favorite Object',
+    price: null,
+    value: Infinity
+  };
+  const objB = {
+    name: 'My Favorite Object',
+    price: null,
+    value: Infinity
+  };
+  // toBe checks reference equality whereas toEqual does a deep property comparison
+  // Objects have same property values
+  expect(objA).toEqual(objB);
+  // But are not the same object (reference inequality)
+  expect(objA).not.toBe(objB);
 });
 
 // Arrays + Strings
@@ -83,41 +118,3 @@ test('Does not match if array does not contain all expected elements', () => {
 
   expect(testList).not.toEqual(expect.arrayContaining(expected));
 })
-
-// Mocks
-test('returns the correct value', () => {
-  const mocked = jest.fn().mockReturnValue('the correct value');
-
-  expect(mocked()).toBe('the correct value');
-});
-
-test('mock name is correct', () => {
-  const mocked = jest.fn().mockName('MyMockedFunc');
-
-  expect(mocked.getMockName()).toBe('MyMockedFunc');
-  expect(mocked).toHaveBeenCalled();
-});
-
-test('mock meets world', () => {
-  const mockHello = jest.fn((name) => `Hello, ${name}!`);
-
-  expect(mockHello('World')).toBe('Hello, World!');
-});
-
-test('can set returned value for mock', () => {
-  const mocked = jest.fn().mockReturnValue('the correct value');
-
-  expect(mocked()).toBe('the correct value');
-});
-
-test('can chain mock functions', () => {
-  const mocked = jest.fn().
-    mockReturnValue('default value').
-    mockReturnValueOnce('first value').
-    mockReturnValueOnce('2nd value');
-
-  expect(mocked()).toBe('first value');
-  expect(mocked()).toBe('2nd value');
-  expect(mocked()).toBe('default value');
-  expect(mocked()).toBe('default value');
-});

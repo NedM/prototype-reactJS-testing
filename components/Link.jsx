@@ -6,7 +6,18 @@ export default class Link extends React.Component {
  constructor() {
    super();
 
-   this.state = { class: 'normal' };
+   this.state = {
+     class: 'normal',
+     clicks: 0,
+   };
+
+   this.onClick = this.onClick.bind(this);
+   this.onMouseEnter = this.onMouseEnter.bind(this);
+   this.onMouseLeave = this.onMouseLeave.bind(this);
+ }
+
+ onClick() {
+   this.setState((prev) => ({clicks: prev.clicks + 1}));
  }
 
  onMouseEnter() {
@@ -22,6 +33,7 @@ export default class Link extends React.Component {
      <a
        className={`link-class ${this.state.class}`}
        href={this.props.page || '#'}
+       onClick={this.onClick}
        onMouseEnter={this.onMouseEnter}
        onMouseLeave={this.onMouseLeave}
      >
@@ -31,6 +43,6 @@ export default class Link extends React.Component {
  }
 }
 
-export const linkWithIcon = ({icon, children}) => (
+export const LinkWithIcon = ({icon, children}) => (
   <span><Icon icon={icon} /><Link>{children}</Link></span>
 );
