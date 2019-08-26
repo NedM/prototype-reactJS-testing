@@ -6,11 +6,12 @@ test('returns the correct value', () => {
 });
 
 test('mock name is correct', () => {
-  const mocked = jest.fn();
+  // const mocked = jest.fn();
   const myMock = jest.fn();
-  // const mocked = jest.fn().mockName('MyMockedFunc');
+  const mocked = jest.fn().mockName('MyMockedFunc');
 
-  // expect(mocked.getMockName()).toBe('MyMockedFunc');
+  console.log(mocked());
+  expect(mocked.getMockName()).toBe('MyMockedFunc');
   expect(mocked).toHaveBeenCalled();
 });
 
